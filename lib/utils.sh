@@ -10,7 +10,8 @@ _usage() {
   fi
 
   case "$1" in
-    s|search) echo "search";;
+    s|search) source "$MANA_ROOTDIR/lib/search.sh"
+      _search $2;;
     i|install) echo "install";;
     l|list) echo "list";;
     u|update) echo "update";;
