@@ -1,0 +1,11 @@
+# Description: commonly used to filter text.
+# Maintainer: luisadha
+# Depends: readline
+
+name="bash"
+version="5.2.21"
+source="https://ftp.gnu.org/gnu/bash/bash-5.2.21.tar.gz"
+
+build(){
+  # intruction.
+}
