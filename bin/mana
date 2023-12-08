@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+source "../lib/utils.sh"
+
+_usage $1
