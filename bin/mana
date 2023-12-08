@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+source "../etc/mana.conf"
 source "../lib/utils.sh"
 
-_usage $1
+_usage $1 $2
