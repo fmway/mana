@@ -12,7 +12,8 @@ _usage() {
   case "$1" in
     s|search) source "$MANA_ROOTDIR/lib/search.sh"
       _search $2;;
-    i|install) echo "install";;
+    i|install) source "$MANA_ROOTDIR/lib/install.sh"
+      _install $2;;
     l|list) echo "list";;
     u|update) echo "update";;
     r|remove) echo "remove";;
