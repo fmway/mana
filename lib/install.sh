@@ -3,7 +3,7 @@ E_NOARGS="75"
 # function to handle source code based package building.
 _sourceBuild(){
   # find packages in the repo.
-  searchP=$(find ../templates -name "$1.mana") 
+  searchP=$(find $MANA_PORTDIR -name "$1.mana")
 
   if [ -z $searchP ]; then
     echo "Package not found."
@@ -30,20 +30,22 @@ _sourceBuild(){
 
 # function to handle binary package building.
 _binBuild(){
-  echo "Binary build."
+  echo "$1 Binary build."
 }
 
 _install(){
+  searchP=$(find $MANA_PORTDIR -name "$1.mana")
+
   if [ -z $1 ]; then
     echo "Enter the name of the package to install"
     exit $E_NOARGS
   fi
 
   # identifies the package to be installed, whether binary or source code based.
-  # if [ $searchP = *-bin.mana ]; then
-  #   _binBuild
-  #   return $?
-  # fi
+  if [ $(echo $searchP | grep -i "\-bin.mana") ]; then
+    _binBuild $1
+    return $?
+  fi
 
   _sourceBuild $1
 
