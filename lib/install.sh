@@ -25,6 +25,13 @@ _sourceBuild(){
   # build and install to the stagged environment.
   build
 
+  # save footprints into a database.
+  source "$MANA_ROOTDIR/lib/footprint.sh"
+  _footprint
+
+  # clean the working directory.
+  rm -fr $SRC
+
   return $?
 }
 
