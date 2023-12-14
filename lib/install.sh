@@ -17,7 +17,9 @@ _sourceBuild(){
   SRC="${MANA_WORKDIR}/${name}-${version}"
 
   # get the source code from the source URL.
-  echo $(wget -P $MANA_DISTDIR $sourceURL)
+  if [ -z $(find $MANA_DISTDIR -name "$name-$version.tar.gz") ]; then
+    echo $(wget -P $MANA_DISTDIR $sourceURL)
+  fi
 
   # unpack the source code.
   tar xvf $MANA_DISTDIR/$name-$version.tar.gz -C $MANA_WORKDIR 
@@ -29,10 +31,19 @@ _sourceBuild(){
   source "$MANA_ROOTDIR/lib/footprint.sh"
   _footprint
 
+  # save ports.
+  cd $MANA_STAGEDIR
+  tar cv --use-compress-program=pigz -f $MANA_PKGDIR/$name-$version.tar.gz *
+
+  # install ports.
+  cd $MANA_ROOTDIR
+  tar xvf $MANA_PKGDIR/$name-$version.tar.gz
+
   # clean the working directory.
   rm -fr $SRC
+  rm -fr $MANA_STAGEDIR/*
 
-  return $?
+  exit $?
 }
 
 # function to handle binary package building.
@@ -51,10 +62,10 @@ _install(){
   # identifies the package to be installed, whether binary or source code based.
   if [ $(echo $searchP | grep -i "\-bin.mana") ]; then
     _binBuild $1
-    return $?
+    exit $?
   fi
 
   _sourceBuild $1
 
-  return $?
+  exit $?
 }
