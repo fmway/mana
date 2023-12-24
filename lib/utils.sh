@@ -19,7 +19,8 @@ _usage() {
     r|remove) echo "remove";;
     h|help ) echo "print this massage";;
     v|version) echo "version: $MANA_VERSION";;
-    * ) echo "Relax yourself!";;
+    * ) echo "$(basename $0): options not recognized -$opt";;
+    
   esac
 
   exit $?
