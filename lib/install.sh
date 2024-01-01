@@ -18,7 +18,7 @@ _sourceBuild(){
 
   # get the source code from the source URL.
   if [ -z $(find $MANA_DISTDIR -name "$name-$version.tar.gz") ]; then
-    echo $(wget -P $MANA_DISTDIR $sourceURL)
+    echo $(wget -P $MANA_DISTDIR $sourceURL -O $MANA_DISTDIR/$name-$version.tar.gz)
   fi
 
   # unpack the source code.
