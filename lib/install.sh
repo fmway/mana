@@ -13,6 +13,17 @@ _isInstalled(){
   return
 }
 
+# identify if package is binary or source based.
+_isBin(){
+  if [ $(echo $1 | grep -i "\-bin.mana") ]; then
+    echo "$1 is binary based."
+    return 0
+  fi
+
+  echo "$1 is source based."
+  return 1
+}
+
 # function to handle source code based package building.
 _sourceBuild(){
   # find packages in the repo.
