@@ -1,5 +1,18 @@
 E_NOARGS="75"
 
+# check package is installed or not.
+_isInstalled(){
+  # check the database, if directory is not exist, means not installed.
+  if [ -z $(find $MANA_DBDIR -type d -name "$1") ]; then
+    echo 1
+    return
+  fi
+
+  # directory exist, means installed.
+  echo 0
+  return
+}
+
 # function to handle source code based package building.
 _sourceBuild(){
   # find packages in the repo.
@@ -31,7 +44,7 @@ _sourceBuild(){
   source "$MANA_ROOTDIR/lib/footprint.sh"
   _footprint
 
- # save ports.
+  # save ports.
   source "$MANA_ROOTDIR/lib/portutils.sh"
   _makePorts
 
