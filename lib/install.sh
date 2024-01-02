@@ -31,13 +31,12 @@ _sourceBuild(){
   source "$MANA_ROOTDIR/lib/footprint.sh"
   _footprint
 
-  # save ports.
-  cd $MANA_STAGEDIR
-  tar cv --use-compress-program=pigz -f $MANA_PKGDIR/$name-$version.tar.gz *
+ # save ports.
+  source "$MANA_ROOTDIR/lib/portutils.sh"
+  _makePorts
 
   # install ports.
-  cd $MANA_ROOTDIR
-  tar xvf $MANA_PKGDIR/$name-$version.tar.gz
+  _installPorts
 
   # save package data.
   echo $version > $MANA_DBDIR/$name/VERSION
