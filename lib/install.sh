@@ -13,6 +13,22 @@ _isInstalled(){
   return
 }
 
+# search the packages.
+_isFound(){
+  # find packages in the repo.
+  searchP=$(find $MANA_PORTDIR \! -type d -name "$1.mana")
+
+  # if not found.
+  if [ -z $searchP ]; then
+    echo "Package not found."
+    exit $?
+  fi
+
+  # if found.
+  echo $searchP
+  return
+}
+
 # identify if package is binary or source based.
 _isBin(){
   if [ $(echo $1 | grep -i "\-bin.mana") ]; then
