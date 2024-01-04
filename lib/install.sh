@@ -42,16 +42,13 @@ _isBin(){
 
 # function to handle source code based package building.
 _sourceBuild(){
-  # find packages in the repo.
-  searchP=$(find $MANA_PORTDIR -name "$1.mana")
-
   if [ -z $searchP ]; then
     echo "Package not found."
     exit $E_NOARGS
   fi
 
   # put .mana intruction build.
-  source "$searchP"
+  source $(_isFound $1)
 
   # set the source code directory.
   SRC="${MANA_WORKDIR}/${name}-${version}"
@@ -87,8 +84,6 @@ _sourceBuild(){
   # clean the working directory.
   rm -fr $SRC
   rm -fr $MANA_STAGEDIR/*
-
-  exit $?
 }
 
 # function to handle binary package building.
