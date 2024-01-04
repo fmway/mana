@@ -1,4 +1,5 @@
 E_NOARGS="75"
+declare -a listInst
 
 # check package is installed or not.
 _isInstalled(){
@@ -89,6 +90,36 @@ _sourceBuild(){
 # function to handle binary package building.
 _binBuild(){
   echo "$1 Binary build."
+}
+
+# check dependencies.
+_whatDeps(){
+  # read from .mana ports file.
+  listdeps="$(head -n 3 $1 | tail -n 1 | cut -d':' -f2)"
+
+  # if not have dependencies.
+  if [ -z $(echo $listdeps | cut -d' ' -f2) ]; then
+    return
+  fi
+
+  # return dependency list.
+  _resDeps $listdeps
+  return
+}
+
+# resolve dependency tree.
+_resDeps(){
+  for i in $@; do
+    # check package is installed or not.
+    if [ $(_isInstalled $i) -eq 1 ]; then
+      # check package is in listInst or not.
+      if echo ${listInst[@]} | grep -wq ${i}; then
+        return
+      fi
+      listInst+=("$i")
+      _whatDeps $(_isFound $i)
+    fi
+  done
 }
 
 _install(){
