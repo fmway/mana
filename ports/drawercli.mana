@@ -1,0 +1,27 @@
+# Description: Luisadha drawer cli project.
+# Maintainer: luisadha
+# Depends: termuxlauncher app
+
+# package name.
+name="drawercli"
+
+# package version.
+version="1.0.6"
+
+# URL package source code.
+sourceURL="https://github.com/luisadha/drawercli/archive/refs/tags/v${version}.tar.gz"
+
+
+
+# package building instructions.
+build(){
+  cd $SRC
+
+  # configure, build and install.
+
+# uncomment this to enable this function
+
+ sh install.mana.sh
+
+  make DESTDIR=$MANA_STAGEDIR install
+}
