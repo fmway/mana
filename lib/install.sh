@@ -32,12 +32,12 @@ _isFound(){
 
 # identify if package is binary or source based.
 _isBin(){
-  if [ $(echo $1 | grep -i "\-bin.mana") ]; then
-    echo "$1 is binary based."
+  if [ $(_isFound $1 | grep -i "\-bin.mana") ]; then
+    _binBuild $1
     return 0
   fi
 
-  echo "$1 is source based."
+  _sourceBuild $1
   return 1
 }
 
