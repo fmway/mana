@@ -114,24 +114,35 @@ _resDeps(){
       listInst+=("$i")
       _whatDeps $(_isFound $i)
     fi
+
+    echo "$i is already installed."
   done
 }
 
 _install(){
-  searchP=$(find $MANA_PORTDIR -name "$1.mana")
-
   if [ -z $1 ]; then
     echo "Enter the name of the package to install"
     exit $E_NOARGS
   fi
 
-  # identifies the package to be installed, whether binary or source code based.
-  if [ $(echo $searchP | grep -i "\-bin.mana") ]; then
-    _binBuild $1
-    exit $?
-  fi
+  _resDeps $1
+  echo "Packages to install:"
+  echo "${listInst[@]}"
 
-  _sourceBuild $1
+  echo "continue? [y/n]"
+  read -r REPLY
+
+  case $REPLY in
+    [yY])
+      j=-1
+      for i in ${listInst[@]}; do
+        _isBin ${listInst[((j--))]}
+      done;;
+    [nN])
+      echo "Aborted." && exit $E_NOARGS ;;
+    *)
+      echo "Invalid input." && exit $E_NOARGS ;;
+  esac
 
   exit $?
 }
