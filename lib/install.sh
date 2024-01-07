@@ -43,11 +43,6 @@ _isBin(){
 
 # function to handle source code based package building.
 _sourceBuild(){
-  if [ -z $searchP ]; then
-    echo "Package not found."
-    exit $E_NOARGS
-  fi
-
   # put .mana intruction build.
   source $(_isFound $1)
 
