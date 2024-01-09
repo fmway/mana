@@ -1,10 +1,10 @@
 E_NOARGS="75"
-declare -a listInst
+declare -a listInst=()
 
 # check package is installed or not.
 _isInstalled(){
   # check the database, if directory is not exist, means not installed.
-  if [ -z $(find $MANA_DBDIR -type d -name "$1") ]; then
+  if [ -z "$(find $MANA_DBDIR -type d -name "$1")" ]; then
     echo 1
     return
   fi
@@ -90,7 +90,7 @@ _binBuild(){
 # check dependencies.
 _whatDeps(){
   # read from .mana ports file.
-  listdeps="$(head -n 3 $1 | tail -n 1 | cut -d':' -f2)"
+  local listdeps="$(head -n 3 $1 | tail -n 1 | cut -d':' -f2)"
 
   # if not have dependencies.
   if [ -z $(echo $listdeps | cut -d' ' -f2) ]; then
