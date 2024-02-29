@@ -11,7 +11,7 @@ _search(){
 
   # print user search results.
   for i in $list; do
-    echo $i | cut -d'/' -f3 | cut -d'.' -f1
+    echo $i | rev | cut -d'/' -f1 | rev | cut -d'.' -f1
     head -n 1 $i | cut -d':' -f2
     echo
   done
