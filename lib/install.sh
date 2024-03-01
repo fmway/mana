@@ -1,5 +1,6 @@
 E_NOARGS="75"
 E_INARGS="2"
+E_BUILDS="128+n"
 
 declare -a listInst=()
 
@@ -60,7 +61,7 @@ _sourceBuild(){
   tar xvf $MANA_DISTDIR/$name-$version.tar.gz -C $MANA_WORKDIR 
 
   # build and install to the stagged environment.
-  build
+  build || echo "Build failed. Aborting." && exit $E_BUILDS
 
   # save footprints into a database.
   source "$MANA_ROOTDIR/lib/footprint.sh"
@@ -118,7 +119,6 @@ _resDeps(){
     fi
 
     echo "$i is already installed."
-    exit
   done
 }
 
