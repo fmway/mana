@@ -4,7 +4,7 @@ _footprint(){
 
   # create directory if it does not exist.
   if [ -z $(find $MANA_DBDIR -type d -name "$name") ]; then
-    mkdir -p $MANA_DBDIR/$name
+    mkdir -p $MANA_DBDIR/$name || (echo "Cannot create database. Aborting." && exit 1)
   fi
 
   # save footprints into a database.

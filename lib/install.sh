@@ -1,6 +1,6 @@
 E_NOARGS="75"
 E_INARGS="2"
-E_BUILDS="128+n"
+E_BUILDS="128"
 
 declare -a listInst=()
 
@@ -25,7 +25,7 @@ _isFound(){
   # if not found.
   if [ -z $searchP ]; then
     echo "Package not found."
-    exit $?
+    exit $E_BUILDS
   fi
 
   # if found.
@@ -54,11 +54,11 @@ _sourceBuild(){
 
   # get the source code from the source URL.
   if [ -z $(find $MANA_DISTDIR -name "$name-$version.tar.gz") ]; then
-    echo $(wget -P $MANA_DISTDIR $sourceURL -O $MANA_DISTDIR/$name-$version.tar.gz)
+    echo $(wget -P $MANA_DISTDIR $sourceURL -O $MANA_DISTDIR/$name-$version.tar.gz) || (echo "Failed to get source code. Aborting." && exit $E_BUILDS))
   fi 
 
   # build and install to the stagged environment.
-  build || echo "Build failed. Aborting." && exit $E_BUILDS
+  build || (echo "Build failed. Aborting." && exit $E_BUILDS)
 
   # save footprints into a database.
   source "$MANA_ROOTDIR/lib/footprint.sh"
