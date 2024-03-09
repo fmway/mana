@@ -54,7 +54,7 @@ _sourceBuild(){
 
   # get the source code from the source URL.
   if [ -z $(find $MANA_DISTDIR -name "$name-$version.tar.gz") ]; then
-    echo $(wget -P $MANA_DISTDIR $sourceURL -O $MANA_DISTDIR/$name-$version.tar.gz) || (echo "Failed to get source code. Aborting." && exit $E_BUILDS))
+    echo $(wget -P $MANA_DISTDIR $sourceURL -O $MANA_DISTDIR/$name-$version.tar.gz) || (echo "Failed to get source code. Aborting." && exit $E_BUILDS)
   fi 
 
   # build and install to the stagged environment.
