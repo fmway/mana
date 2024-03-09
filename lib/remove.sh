@@ -10,7 +10,7 @@ _remove(){
   # delete installed package files based on footprint.
   cd $MANA_ROOTDIR
 
-  for i in $(cut -d' ' -f2 $MANA_DBDIR/$1/footprint); do
+  for i in $(cut -d' ' -f2 $MANA_DBDIR/$1/FOOTPRINT); do
     rm -v $i
   done
 
