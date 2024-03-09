@@ -17,6 +17,9 @@ _remove(){
   # delete empty directory.
   find $MANA_ROOTDIR/etc $MANA_ROOTDIR/opt $MANA_ROOTDIR/usr -depth -type d -empty -exec rmdir -v {} \;
 
+  # clean up database.
+  rm -frv $MANA_DBDIR/$1
+
   # remove from the wordlist (/var/db/mana/world).
   sed -i "/$1/d" $MANA_DBDIR/world
 
