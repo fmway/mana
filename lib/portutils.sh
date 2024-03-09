@@ -1,27 +1,31 @@
 _makePorts(){
+  # set db dir.
+  DB=var/db/mana/$name
+
   # enter the stage environment.
   cd $MANA_STAGEDIR
 
-  # save ports to $MANA_PKGDIR.
-  tar -cv --use-compress-program=pigz -f $MANA_PKGDIR/$name-$version.tar.gz *
+  # create database structure.
+  mkdir -p $DB || (echo "Failed to create \$DB" && exit 1)
 
-  if [ -z $(find $MANA_PKGDIR -name "$name-$version.tar.gz") ]; then
-    echo "Failed to save ports to $name-$version.tar.gz"
-    exit $?
-  fi
-    echo "Success: $name-$version.tar.gz"
+  # save package data.
+  echo $version > $DB/VERSION
+  echo $CFLAGS > $DB/CFLAGS
+  echo $CXXFLAGS > $DB/CXXFLAGS
+  echo $LDFLAGS > $DB/LDFLAGS
+
+  # save ports to $MANA_PKGDIR.
+  tar -cv --use-compress-program=pigz -f $MANA_PKGDIR/$name-$version.tar.gz * || \
+    (echo "Failed to save ports to $name-$version.tar.gz" && exit 1)
+
+  echo "Success: $name-$version.tar.gz"
 }
 
 _installPorts(){
-  # enter the stage environment.
+  # enter the root environment.
   cd $MANA_ROOTDIR
 
-  # install saved ports from $MANA_PKGDIR.
-  if [ -z $(find $MANA_PKGDIR -name "$name-$version.tar.gz") ]; then
-    echo "Failed to load ports from $name-$version.tar.gz"
-    exit $?
-  fi
-
   # just extract it.
-  tar xvf $MANA_PKGDIR/$name-$version.tar.gz
+  tar xvf $MANA_PKGDIR/$name-$version.tar.gz || \
+    (echo "Failed to install ports. Aborting." && exit 1)
 }

@@ -71,12 +71,6 @@ _sourceBuild(){
   # install ports.
   _installPorts
 
-  # save package data.
-  echo $version > $MANA_DBDIR/$name/VERSION
-  echo $CFLAGS > $MANA_DBDIR/$name/CFLAGS
-  echo $CXXFLAGS > $MANA_DBDIR/$name/CXXFLAGS
-  echo $LDFLAGS > $MANA_DBDIR/$name/LDFLAGS
-
   # clean the working directory.
   rm -fr $SRC
   rm -fr $MANA_STAGEDIR/*
