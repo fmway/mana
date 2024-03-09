@@ -10,8 +10,6 @@ _footprint(){
   # save footprints into a database.
   for i in $(find * \! -type d); do
     permission=$(stat -c "%a" $i)
-    echo "$permission $i" >> $MANA_DBDIR/$name/FOOTPRINT
+    echo "$permission $i" >> $MANA_DBDIR/$name/FOOTPRINT || (echo "Cannot write database. Aborting." && exit 1)
   done
-
-  exit $?
 }
