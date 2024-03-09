@@ -60,10 +60,6 @@ _sourceBuild(){
   # build and install to the stagged environment.
   build || (echo "Build failed. Aborting." && exit $E_BUILDS)
 
-  # save footprints into a database.
-  source "$MANA_ROOTDIR/lib/footprint.sh"
-  _footprint
-
   # save ports.
   source "$MANA_ROOTDIR/lib/portutils.sh"
   _makePorts

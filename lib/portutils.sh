@@ -8,6 +8,10 @@ _makePorts(){
   # create database structure.
   mkdir -p $DB || (echo "Failed to create \$DB" && exit 1)
 
+  # save footprints into a database.
+  source "$MANA_ROOTDIR/lib/footprint.sh"
+  _footprint $MANA_STAGEDIR $DB
+
   # save package data.
   echo $version > $DB/VERSION
   echo $CFLAGS > $DB/CFLAGS
