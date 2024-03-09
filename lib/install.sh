@@ -104,8 +104,6 @@ _resDeps(){
       listInst+=("$i")
       _whatDeps $(_isFound $i)
     fi
-
-    echo "$i is already installed."
   done
 }
 
@@ -113,6 +111,11 @@ _install(){
   if [ -z $1 ]; then
     echo "Enter the name of the package to install"
     exit $E_NOARGS
+  fi
+
+  if [ $(_isInstalled $1) -eq 0 ]; then
+    echo "$1 is already installed."
+    exit 0
   fi
 
   _resDeps $1
@@ -127,7 +130,10 @@ _install(){
       j=-1
       for i in ${listInst[@]}; do
         _isBin ${listInst[((j--))]}
-      done;;
+      done
+
+      # record installed package to the world database.
+      echo "$1" >> $MANA_DBDIR/world ;;
     [nN])
       echo "Aborted." && exit $E_NOARGS ;;
     *)
