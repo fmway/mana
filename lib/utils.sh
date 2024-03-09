@@ -17,7 +17,8 @@ _usage() {
       # Saya memberikaan opsi -e pada echo Agar nanti dapat memberikan kemudahan membuat dokumentasi untuk option help
     l|list) echo -e "list";;
     u|update) echo -e "update";;
-    r|remove) echo -e "remove";;
+    r|remove) source "$MANA_ROOTDIR/lib/remove.sh"
+      _remove $2;;
     h|help ) echo -e "print this massage";;
     v|version) echo -e "version: $MANA_VERSION";;
     * ) echo -e "$(basename $0): options not recognized -$opt";;
